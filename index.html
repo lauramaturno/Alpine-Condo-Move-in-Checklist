@@ -479,7 +479,13 @@
 
 <script>
   const total = 6;
-  const state = {};
+  const STORAGE_KEY = 'checklist-1895-alpine-c13';
+
+  const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
 
   function toggle(id) {
     const el = document.getElementById('item-' + id);
@@ -492,6 +498,7 @@
     state[id] = !state[id];
     el.classList.toggle('completed', state[id]);
     updateProgress();
+    saveState();
   }
 
   function updateProgress() {
@@ -501,8 +508,18 @@
     document.getElementById('progressLabel').textContent = done + ' of ' + total + ' completed';
   }
 
-  // Open first item by default
-  document.getElementById('item-1').classList.add('open');
+  // Restore saved checked state on load
+  Object.keys(state).forEach(function(id) {
+    if (state[id]) {
+      document.getElementById('item-' + id).classList.add('completed');
+    }
+  });
+  updateProgress();
+
+  // Open first item by default only if nothing is checked yet
+  if (Object.values(state).every(function(v) { return !v; })) {
+    document.getElementById('item-1').classList.add('open');
+  }
 </script>
 </body>
 </html>
