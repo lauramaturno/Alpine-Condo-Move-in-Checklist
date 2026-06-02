@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move-In Checklist: 1895 Alpine Ave, Unit C13</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 40px 20px 80px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    .deadline-banner {
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      font-size: 15px;
+    }
+
+    .deadline-banner .icon { font-size: 20px; }
+    .deadline-banner strong { font-size: 16px; }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .progress-bar-wrap {
+      background: #e0e0e0;
+      border-radius: 99px;
+      height: 8px;
+      margin: 20px 0 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #2d7d46;
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .item {
+      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid #e8e8e8;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .item.completed {
+      border-color: #2d7d46;
+      background: #f6fbf7;
+    }
+
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #ccc;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .item.completed .checkbox {
+      background: #2d7d46;
+      border-color: #2d7d46;
+    }
+
+    .checkbox svg { display: none; }
+    .item.completed .checkbox svg { display: block; }
+
+    .item-title {
+      font-size: 17px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .item.completed .item-title {
+      color: #2d7d46;
+    }
+
+    .due-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: #b84a0a;
+      background: #fff3ed;
+      border: 1px solid #f5c9a8;
+      border-radius: 99px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .item.completed .due-badge {
+      color: #2d7d46;
+      background: #eaf5ed;
+      border-color: #b3dcc0;
+    }
+
+    .toggle-icon {
+      color: #aaa;
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .item.open .toggle-icon { transform: rotate(180deg); }
+
+    .item-body {
+      display: none;
+      padding: 0 20px 20px 56px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .item.open .item-body { display: block; }
+
+    .item-body p {
+      color: #444;
+      font-size: 15px;
+      margin-top: 14px;
+    }
+
+    .detail-box {
+      background: #f8f8f7;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    .detail-box .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-row .key {
+      font-weight: 600;
+      color: #555;
+      min-width: 120px;
+    }
+
+    .detail-row .val { color: #222; }
+
+    .amount {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .amount-label {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .amounts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .amount-card {
+      background: #f8f8f7;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    a.link {
+      color: #1a5ccc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a.link:hover { text-decoration: underline; }
+
+    .step {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eef2ff;
+      color: #3451b2;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 2px 2px 2px 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: #aaa;
+      margin: 20px 0 10px;
+    }
+
+    footer {
+      text-align: center;
+      color: #bbb;
+      font-size: 13px;
+      margin-top: 48px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="deadline-banner">
+      <span class="icon">📅</span>
+      <div><strong>All items due by June 15, 2026</strong> — your move-in date</div>
+    </div>
+    <h1>Move-In Checklist</h1>
+    <p class="subtitle">Complete all 6 items before your move-in date to ensure a smooth transition.</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p class="progress-label" id="progressLabel">0 of 6 completed</p>
+  </header>
+
+  <!-- 1. Payment -->
+  <div class="item" id="item-1">
+    <div class="item-header" onclick="toggle(1)">
+      <div class="checkbox" onclick="check(event,1)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Pay Move-In Fees</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p>Two payments are required before or on your move-in date. Pay both through your <strong>TurboTenant</strong> account.</p>
+
+      <div class="amounts-grid">
+        <div class="amount-card">
+          <div class="amount-label">Pet Security Deposit</div>
+          <div class="amount">$300.00</div>
+        </div>
+        <div class="amount-card">
+          <div class="amount-label">Rent + Pet Rent</div>
+          <div class="amount">$1,330.67</div>
+        </div>
+      </div>
+
+      <div class="detail-box" style="margin-top:14px">
+        <div class="label">How to Pay</div>
+        <div class="step"><div class="step-num">1</div><div>Log in to your TurboTenant tenant portal.</div></div>
+        <div class="step"><div class="step-num">2</div><div>Navigate to <strong>Payments</strong> and submit both amounts.</div></div>
+        <div class="step"><div class="step-num">3</div><div>Save your payment confirmation receipts.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Electricity -->
+  <div class="item" id="item-2">
+    <div class="item-header" onclick="toggle(2)">
+      <div class="checkbox" onclick="check(event,2)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Set Up Electricity Service</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p>You are responsible for setting up electricity in your name with Xcel Energy before move-in. Service must start <strong>June 15, 2026</strong>.</p>
+
+      <div class="detail-box">
+        <div class="label">Provider Details</div>
+        <div class="detail-row"><span class="key">Provider</span><span class="val">Xcel Energy</span></div>
+        <div class="detail-row"><span class="key">Service Start</span><span class="val">June 15, 2026</span></div>
+        <div class="detail-row"><span class="key">Website</span><span class="val"><a class="link" href="https://www.xcelenergy.com" target="_blank">xcelenergy.com</a></span></div>
+        <div class="detail-row"><span class="key">Phone</span><span class="val">1-800-895-4999</span></div>
+      </div>
+
+      <div class="detail-box" style="margin-top:12px">
+        <div class="label">Steps</div>
+        <div class="step"><div class="step-num">1</div><div>Visit <a class="link" href="https://www.xcelenergy.com" target="_blank">xcelenergy.com</a> and create an account or call 1-800-895-4999.</div></div>
+        <div class="step"><div class="step-num">2</div><div>Start new service at 1895 Alpine Ave C13 Boulder, CO 80304 with a start date of <strong>June 15, 2026</strong>.</div></div>
+        <div class="step"><div class="step-num">3</div><div>Email proof of account setup (screenshot of confirmation email or account page) to <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Renters Insurance -->
+  <div class="item" id="item-3">
+    <div class="item-header" onclick="toggle(3)">
+      <div class="checkbox" onclick="check(event,3)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Purchase Renters Insurance</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p>Your policy must meet the following requirements:</p>
+
+      <div class="detail-box">
+        <div class="label">Policy Requirements</div>
+        <div class="detail-row"><span class="key">Min. Liability</span><span class="val">$100,000</span></div>
+        <div class="detail-row"><span class="key">Lease Term</span><span class="val">June 15, 2026 – June 14, 2027 (policy must be active for the full term)</span></div>
+        <div class="detail-row"><span class="key">Covered Members</span><span class="val">All household members must be listed on the policy</span></div>
+        <div class="detail-row"><span class="key">Interested Party</span><span class="val">Landlord must be listed</span></div>
+      </div>
+
+      <div class="detail-box" style="margin-top:12px">
+        <div class="label">Landlord Interested Party Info</div>
+        <div class="detail-row"><span class="key">Name</span><span class="val">Laura Maturno</span></div>
+        <div class="detail-row"><span class="key">Address</span><span class="val">955 Arapahoe Cir, Louisville, CO 80027</span></div>
+        <div class="detail-row"><span class="key">Email</span><span class="val"><a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a></span></div>
+      </div>
+
+      <div class="detail-box" style="margin-top:12px">
+        <div class="label">Steps</div>
+        <div class="step"><div class="step-num">1</div><div>Purchase a renters insurance policy with at least $100,000 liability coverage.</div></div>
+        <div class="step"><div class="step-num">2</div><div>Add <strong>Laura Maturno</strong> as an interested party using the address and email above.</div></div>
+        <div class="step"><div class="step-num">3</div><div>Email the declarations page or proof of coverage to <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Vehicle Info -->
+  <div class="item" id="item-4">
+    <div class="item-header" onclick="toggle(4)">
+      <div class="checkbox" onclick="check(event,4)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Submit Vehicle Information</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p>Provide the following information for <strong>each vehicle</strong> associated with your household. Email it to <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a>.</p>
+
+      <div class="detail-box" style="margin-top:14px">
+        <div class="label">Required for Each Vehicle</div>
+        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px">
+          <span class="tag">Make</span>
+          <span class="tag">Model</span>
+          <span class="tag">Color</span>
+          <span class="tag">Year</span>
+          <span class="tag">State</span>
+          <span class="tag">License Plate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Emergency Contact -->
+  <div class="item" id="item-5">
+    <div class="item-header" onclick="toggle(5)">
+      <div class="checkbox" onclick="check(event,5)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Provide Emergency Contact</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p><strong>Each household member</strong> must submit their own emergency contact who does <strong>not</strong> live in the unit. Provide the following details for each contact and indicate whether this person has permission to enter the unit in an emergency. Email this information to <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a>.</p>
+
+      <div class="detail-box" style="margin-top:14px">
+        <div class="label">Required Information</div>
+        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px">
+          <span class="tag">Full Name</span>
+          <span class="tag">Relationship</span>
+          <span class="tag">Phone Number</span>
+          <span class="tag">Email Address</span>
+          <span class="tag">Emergency Entry Permission (Yes/No)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Pet Documentation -->
+  <div class="item" id="item-6">
+    <div class="item-header" onclick="toggle(6)">
+      <div class="checkbox" onclick="check(event,6)">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none"><path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="item-title">Submit Pet Documentation</span>
+      <span class="due-badge">Due Jun 15</span>
+      <span class="toggle-icon">⌄</span>
+    </div>
+    <div class="item-body">
+      <p>Provide proof of up-to-date vaccinations for each pet in the household.</p>
+
+      <div class="detail-box" style="margin-top:14px">
+        <div class="label">Required</div>
+        <div class="step"><div class="step-num">1</div><div>Obtain current vaccination records from your veterinarian.</div></div>
+        <div class="step"><div class="step-num">2</div><div>Email copies (photo or PDF) for each pet to <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Questions? Contact your landlord at <a class="link" href="mailto:laura.maturno@gmail.com">laura.maturno@gmail.com</a> or <a class="link" href="tel:5167497835">516-749-7835</a></footer>
+</div>
+
+<script>
+  const total = 6;
+  const state = {};
+
+  function toggle(id) {
+    const el = document.getElementById('item-' + id);
+    el.classList.toggle('open');
+  }
+
+  function check(e, id) {
+    e.stopPropagation();
+    const el = document.getElementById('item-' + id);
+    state[id] = !state[id];
+    el.classList.toggle('completed', state[id]);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = Object.values(state).filter(Boolean).length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' of ' + total + ' completed';
+  }
+
+  // Open first item by default
+  document.getElementById('item-1').classList.add('open');
+</script>
+</body>
+</html>
